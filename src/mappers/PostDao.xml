@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xin.oaec.xwls.dao.PostDao">
+    <select id="queryLimit" parameterType="map" resultType="map">
+        SELECT typecho_contents.cid, typecho_contents.title, typecho_metas.`name` AS category,
+        FROM_UNIXTIME(typecho_contents.created, '%Y-%m-%d') AS created,
+        SUBSTRING(SUBSTRING_INDEX(text, '&lt;!--more--&gt;', 1), 16) AS text
+        FROM typecho_contents INNER JOIN typecho_relationships ON typecho_contents.cid = typecho_relationships.cid INNER JOIN typecho_metas ON typecho_metas.mid = typecho_relationships.mid WHERE typecho_metas.type = 'category' ORDER BY created DESC LIMIT #{page}, #{pageSize}
+    </select>
+    <select id="getTotalCount" resultType="int">
+      SELECT count(typecho_contents.cid) as totalCount FROM typecho_contents INNER JOIN typecho_relationships ON typecho_contents.cid = typecho_relationships.cid INNER JOIN typecho_metas ON typecho_metas.mid = typecho_relationships.mid WHERE typecho_metas.type = 'category'
+    </select>
+</mapper>
