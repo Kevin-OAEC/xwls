@@ -15,4 +15,11 @@ public interface PostDao {
 	List<Map<String, Object>> queryLimit(Map<String,Integer> map);
 
 	int getTotalCount();
+
+	/**
+	 * 根据cid查询post详情
+	 * @param cid
+	 * @return
+	 */
+	Map<String, Object> queryByCid(int cid);
 }

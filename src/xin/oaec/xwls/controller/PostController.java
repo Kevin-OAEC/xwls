@@ -46,4 +46,25 @@ public class PostController {
 		}
 		return jsonObject.toJSONString();
 	}
+
+	@RequestMapping(value = "/getPost", produces = "text/html;charset=utf-8")
+	@ResponseBody
+	public String getPost(@RequestParam("cid") int cid){
+		Map<String, Object> post = postService.queryByCid(cid);
+		String text = post.get("text").toString();
+		if (text != null){
+			text = text.replace("<!--markdown-->","");
+			text = text.replace("<!--more-->","");
+			post.put("text",text);
+		}
+		JSONObject jsonObject = new JSONObject();
+		if (post != null){
+			jsonObject.put("success",true);
+			jsonObject.put("post",post);
+		}else{
+			jsonObject.put("success",false);
+			jsonObject.put("reason","未查询到内容，请稍后再试");
+		}
+		return jsonObject.toJSONString();
+	}
 }

@@ -16,4 +16,6 @@ public interface PostService {
 	List<Map<String, Object>> queryLimit(int page,int pageSize);
 
 	int getTotalCount();
+
+	Map<String, Object> queryByCid(int cid);
 }

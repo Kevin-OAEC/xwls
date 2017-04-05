@@ -12,4 +12,7 @@
     <select id="getTotalCount" resultType="int">
       SELECT count(typecho_contents.cid) as totalCount FROM typecho_contents INNER JOIN typecho_relationships ON typecho_contents.cid = typecho_relationships.cid INNER JOIN typecho_metas ON typecho_metas.mid = typecho_relationships.mid WHERE typecho_metas.type = 'category'
     </select>
+    <select id="queryByCid" parameterType="int" resultType="map">
+      SELECT typecho_contents.cid, typecho_contents.title, typecho_metas.`name` AS category, FROM_UNIXTIME(typecho_contents.created, '%Y-%m-%d') AS created, typecho_contents.text FROM typecho_contents INNER JOIN typecho_relationships ON typecho_contents.cid = typecho_relationships.cid INNER JOIN typecho_metas ON typecho_metas.mid = typecho_relationships.mid WHERE typecho_metas.type = 'category' AND typecho_contents.cid = #{cid}
+    </select>
 </mapper>

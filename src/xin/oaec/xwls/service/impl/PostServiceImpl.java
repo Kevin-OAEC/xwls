@@ -31,4 +31,9 @@ public class PostServiceImpl implements PostService {
 	public int getTotalCount() {
 		return postDao.getTotalCount();
 	}
+
+	@Override
+	public Map<String, Object> queryByCid(int cid) {
+		return postDao.queryByCid(cid);
+	}
 }
